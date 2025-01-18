@@ -40,13 +40,3 @@ output "kube_config" {
   value     = module.aks_cluster.kube_config
   sensitive = true
 }
-
-output "acr_repo_name" {
-  value = azurerm_container_registry.acr_repo.name
-
-}
-
-output "acr_repo_login_server" {
-  value = azurerm_container_registry.acr_repo.login_server
-
-}
