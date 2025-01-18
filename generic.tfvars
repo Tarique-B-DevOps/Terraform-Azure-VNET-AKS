@@ -1,7 +1,7 @@
 # Common Vars Values
-environment = "staging"
+environment = "dev"
 tags = {
-  "environment"    = "Staging"
+  "environment"    = "Dev"
   "application"    = "generic"
   "deploymentType" = "Terraform/Jenkins",
 }
