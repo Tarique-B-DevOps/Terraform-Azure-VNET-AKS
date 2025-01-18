@@ -8,9 +8,7 @@ pipeline {
 
     parameters {
         choice(name: 'BACKEND_TYPE', choices: ['remote', 's3', 'gcs', 'azurerm'], description: 'Choose the backend type for Terraform initialization')
-
         choice(name: 'HCP_EXEC_MODE', choices: ['local', 'remote'], description: 'Choose the Terraform Cloud workspace execution mode')
-
         string(name: 'BACKEND_CONFIG', defaultValue: 'remote-generic.hcl', description: 'Specify backend config file for Terraform initialization (e.g., remote-staging.hcl or gcs-staging.hcl)')
         string(name: 'TF_VAR_FILE', defaultValue: '', description: 'Specify the Terraform variable file (e.g., generic.tfvars).')
         booleanParam(name: 'DESTROY_TERRAFORM', defaultValue: false, description: 'Check to destroy resources instead of applying.')
@@ -20,8 +18,10 @@ pipeline {
         stage('Check Mandatory Parameters') {
             steps {
                 script {
-                    if (!params.BACKEND_CONFIG || !params.TF_VAR_FILE) {
-                        error "Both BACKEND_CONFIG and TF_VAR_FILE must be provided to proceed."
+                    if (!(params.BACKEND_TYPE == 'remote' && params.HCP_EXEC_MODE == 'remote')) {
+                        if (!params.BACKEND_CONFIG || !params.TF_VAR_FILE) {
+                            error "Both BACKEND_CONFIG and TF_VAR_FILE must be provided to proceed."
+                        }
                     }
 
                     if (params.BACKEND_TYPE != 'remote' && params.HCP_EXEC_MODE == 'remote') {
