@@ -3,7 +3,7 @@ environment = "staging"
 tags = {
   "environment"    = "Staging"
   "application"    = "NoteIt"
-  "deploymentType" = "Terraform"
+  "deploymentType" = "Terraform/Jenkins"
 }
 
 # VNET Vars values
